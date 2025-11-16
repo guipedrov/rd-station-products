@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Recomendador de Produtos RD Station
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esse projeto implementa uma pequena aplicação React responsável por gerar recomendações de produtos da RD Station a partir das preferências selecionadas pelo usuário.
 
 ## Available Scripts
 

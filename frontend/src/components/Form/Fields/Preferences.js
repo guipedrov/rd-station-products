@@ -1,5 +1,3 @@
-// Preferences.js
-
 import { useState } from 'react';
 import Checkbox from '../../shared/Checkbox';
 
