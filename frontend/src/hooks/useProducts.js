@@ -1,5 +1,3 @@
-// useProducts.js
-
 import { useEffect, useState } from 'react';
 import getProducts from '../services/product.service';
 

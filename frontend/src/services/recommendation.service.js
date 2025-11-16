@@ -1,5 +1,3 @@
-// getRecommendations.js
-
 const getMatchingProducts = (
   products,
   selectedFeatures,
