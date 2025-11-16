@@ -24,7 +24,7 @@ Este projeto utiliza as seguintes tecnologias principais:
 - Tailwind CSS 3.4.1: Para estilização e layout responsivo
 - json-server 1.0.0-alpha.23: Para simular um servidor RESTful com dados de produtos
 - Axios 1.5.1: Para fazer o fetch dos dados vindos do servidor RESTful simulado
-- jest-dom 5.17.0: Para usar matches customizados do Jest que testam o estado do DOM
+- jest-dom 5.17.0: Para usar matchers customizados do Jest que testam o estado do DOM
 - React Testing Library 13.4.0: Para usar utilitários de testes do DOM do React
 - user-event (Testing Library) 13.5.0: Para disparar eventos que simulam interações de um usuário
 
@@ -71,14 +71,14 @@ A lógica está dividida em 3 partes principais: (1) Validação, (2) Modo Singl
 
 #### (1) Validação: Impede a execução das demais lógicas caso não haja dados suficientes para gerar recomendações.
 
-A função getRecommendations executa, no início, a função utilitária hasNoData, que:
+A função getRecommendations executa, no início, a função utilitária `hasNoData, que:
 
-1. Verifica se nenhuma preference foi selecionada pelo usuário (selectedPreferences.length === 0);
-2. Verifica se nenhuma feature foi selecionada pelo usuário (selectedFeatures.length === 0);
+1. Verifica se nenhuma preference foi selecionada pelo usuário (`selectedPreferences.length === 0`);
+2. Verifica se nenhuma feature foi selecionada pelo usuário (`selectedFeatures.length === 0`);
 3. Verifica se a lista de produtos está vazia ou é falsy;
 4. Caso não haja seleções do usuário nem em preferences e nem em features, ou não haja produtos disponíveis, a função retorna true, indicando que não é possível gerar recomendações;
 
-Quando hasNoData retorna true, a função getRecommendations retorna imediatamente um array vazio, que mantém ou devolve a lista de recomendações ao estado vazio.
+Quando `hasNoData` retorna true, a função getRecommendations retorna imediatamente um array vazio, que mantém ou devolve a lista de recomendações ao estado vazio.
 
 #### (2) Modo SingleProduct: Traz o produto mais relevante ou o último, em caso de empate de produtos
 
