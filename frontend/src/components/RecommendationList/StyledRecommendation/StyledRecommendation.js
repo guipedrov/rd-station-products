@@ -16,7 +16,7 @@ function StyledRecommendation({ name }) {
 
   return (
     <div
-      className={`mb-4 py-5 text-2xl font-bold text-center text-white ${productBackground(
+      className={`mb-4 py-5 text-xl font-bold text-center text-white ${productBackground(
         name
       )}`}
     >
