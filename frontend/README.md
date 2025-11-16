@@ -2,69 +2,108 @@
 
 Esse projeto implementa uma pequena aplicação React responsável por gerar recomendações de produtos da RD Station a partir das preferências selecionadas pelo usuário.
 
-## Available Scripts
+## Como Executar
 
-In the project directory, you can run:
+1. Clone o repositório: `git clone https://github.com/guipedrov/rd-station-products.git`
+2. Instale as dependências: `yarn install`
+3. Para instalar o projeto, execute o script `./install.sh` 
+4. Inicie a aplicação: `yarn start`
 
-### `yarn start`
+### Scripts Disponíveis
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `start`: Inicia a aplicação React em modo de desenvolvimento.
+- `start:frontend`: Inicia apenas a parte frontend da aplicação em modo de desenvolvimento.
+- `start:backend`: Inicia apenas a parte backend da aplicação em modo de desenvolvimento.
+- `dev`: Inicia simultaneamente a parte frontend e backend da aplicação em modo de desenvolvimento.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologias Utilizadas
 
-### `yarn test`
+Este projeto utiliza as seguintes tecnologias principais:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React.js 18.2.0: Para o desenvolvimento do front-end
+- Tailwind CSS 3.4.1: Para estilização e layout responsivo
+- Axios 1.5.1: Para fazer o fetch dos dados mockados
+- @testing-library/jest-dom 5.17.0: Para execução dos testes unitários
+- @testing-library/react 13.4.0: Para execução dos testes unitários
+- @testing-library/user-event 13.5.0: Para execução dos testes unitários
+- React.js: Para o desenvolvimento do front-end
+- json-server: Para simular um servidor RESTful com dados de produtos
 
-### `yarn build`
+## Rodando os Testes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para executar a suite de testes do projeto, siga os passos abaixo:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Entre na subpasta do frontend:
+```
+cd frontend
+```
+2. Rode todos os testes de uma vez:
+```
+yarn test
+```
+3. Ou, se preferir, rode apenas um teste específico (exemplo):
+```
+yarn test recommendation.service.test.js
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Arquivos de teste disponíveis:
 
-### `yarn eject`
+product.service.test.js
+recommendation.service.test.js
+RecommendationList.test.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Detalhes do projeto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Descrição geral das funcionalidades
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Nesta aplicação, o usuário poderá clicar em um ou mais itens das listas de Funcionalidades e de Preferências;
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Adicionalmente o usuário poderá também indicar se deseja ver um Produto Único ou Múltiplos Produtos, clicando nos respectivos botões radio, como resposta da sua pesquisa;
 
-## Learn More
+Após selecionar qualquer combinação de opções, ele clicará no botão "Obter recomendação", que enviará seu formulário e trará a lista de Produtos da RD Station que atendem àquela pesquisa;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Os Produtos serão exibidos em uma coluna à direita da coluna que exibe o formulário.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Lógica de Recomendação
 
-### Code Splitting
+A lógica de recomendação está implementada em: frontend\src\services\recommendation.service.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Ela está dividida em 3 partes principais: (1) Validação, (2) Modo SingleProduct e (3) Modo MultipleProducts.
 
-### Analyzing the Bundle Size
+(1) Validação: Impede a execução das demais lógicas caso não haja dados suficientes para gerar recomendações.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+A função getRecommendations executa, no início, a função utilitária hasNoData, que:
 
-### Making a Progressive Web App
+1. Verifica se nenhuma preference foi selecionada pelo usuário (selectedPreferences.length === 0);
+2. Verifica se nenhuma feature foi selecionada pelo usuário (selectedFeatures.length === 0);
+3. Verifica se a lista de produtos está vazia ou é falsy;
+4. Caso não haja seleções do usuário nem em preferences e nem em features, ou não haja produtos disponíveis, a função retorna true, indicando que não é possível gerar recomendações;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Quando hasNoData retorna true, a função getRecommendations retorna imediatamente um array vazio, que mantém ou devolve a lista de recomendações ao estado vazio.
 
-### Advanced Configuration
+(2) Modo SingleProduct: Traz o produto mais relevante ou o último, em caso de empate de produtos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+A função getRecommendations executa a função utilitária getTopProduct, que:
 
-### Deployment
+1. Itera por todos os elementos dentro do array products (lista de produtos);
+2. Conta quantas features de cada produto coincidem com as selecionadas (selectedFeatures);
+3. Conta quantas preferences de cada produto coincidem com as selecionadas (selectedPreferences);
+4. Soma ambas as quantidades para gerar uma pontuação (armazenada na nova propriedade matches);
+5. Percorre por todos os produtos do array gerado nesse escopo (rankedProducts) e retorna o produto com a maior pontuação;
+6. Em caso de empate de pontuações (matches), o último produto da lista com a maior pontuação é o retornado;
+7. O retorno sempre será uma lista (um array) contendo apenas esse único produto.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+(3) Modo MultipleProduct: Traz todos os produtos que contém um ou mais atributos dentre os selecionados pelo usuário
 
-### `yarn build` fails to minify
+A função getRecommendations executa a função utilitária getMatchingProducts, que:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Itera por todos os elementos dentro do array products (lista de produtos);
+2. Verifica se cada produto possui ao menos uma feature que esteja presente no array de features selecionadas (selectedFeatures);
+3. Verifica se cada produto possui ao menos uma preference que esteja presente no array de preferences selecionadas (selectedPreferences);
+4. Se houver correspondência em qualquer um dos dois critérios (features ou preferences), o produto é incluído no array filtrado;
+5. Retorna a lista gerada contendo todos os produtos que atendem a pelo menos um dos critérios.
+
+## Autor
+
+Guilherme Pedro Velho
+GitHub: https://github.com/seu-usuario
