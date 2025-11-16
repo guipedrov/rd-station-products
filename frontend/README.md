@@ -71,7 +71,7 @@ A lógica está dividida em 3 partes principais: (1) Validação, (2) Modo Singl
 
 #### (1) Validação: Impede a execução das demais lógicas caso não haja dados suficientes para gerar recomendações.
 
-A função getRecommendations executa, no início, a função utilitária `hasNoData, que:
+A função getRecommendations executa, no início, a função utilitária `hasNoData`, que:
 
 1. Verifica se nenhuma preference foi selecionada pelo usuário (`selectedPreferences.length === 0`);
 2. Verifica se nenhuma feature foi selecionada pelo usuário (`selectedFeatures.length === 0`);
@@ -92,7 +92,7 @@ A função `getRecommendations` executa a função utilitária `getTopProduct`, 
 6. Em caso de empate de pontuações (matches), o último produto da lista com a maior pontuação é o retornado;
 7. O retorno sempre será uma lista (um array) contendo apenas esse único produto.
 
-#### (3) Modo MultipleProduct: Traz todos os produtos que contém um ou mais atributos dentre os selecionados pelo usuário
+#### (3) Modo MultipleProduct: Traz todos os produtos que contêm um ou mais atributos dentre os selecionados pelo usuário
 
 A função `getRecommendations` executa a função utilitária `getMatchingProducts`, que:
 
