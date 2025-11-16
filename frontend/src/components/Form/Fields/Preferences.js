@@ -19,10 +19,10 @@ function Preferences({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Preferências:</h2>
+      <h2 className="text-xl font-bold mb-2">Preferências:</h2>
       <ul>
         {preferences.map((preference, index) => (
-          <li key={index} className="text-lg lg:text-xl mb-4">
+          <li key={index} className="text-md lg:text-lg mb-2">
             <Checkbox
               value={preference}
               checked={currentPreferences.includes(preference)}

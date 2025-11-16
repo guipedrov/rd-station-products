@@ -22,7 +22,7 @@ function Form({ refreshRecommendations }) {
 
   return (
     <form
-      className="w-full mx-auto bg-white rounded-xl py-5 px-6 border-2 border-gray-200 flex flex-col gap-y-4"
+      className="w-full mx-auto bg-white rounded-xl border-2 border-gray-200 flex flex-col py-5 px-6 gap-y-4"
       onSubmit={handleSubmit}
     >
       <Preferences
