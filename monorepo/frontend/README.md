@@ -5,9 +5,10 @@ Esse projeto implementa uma pequena aplicação React responsável por gerar rec
 ## Como Executar
 
 1. Clone o repositório: `git clone https://github.com/guipedrov/rd-station-products.git`
-2. Instale as dependências: `yarn install`
-3. Para instalar o projeto, execute o script `./install.sh` 
-4. Inicie a aplicação: `yarn start`
+2. Entre no diretório monorepo: `cd monorepo`
+3. Instale as dependências: `yarn install`
+4. Para instalar o projeto, execute o script `./install.sh` 
+5. Inicie a aplicação: `yarn start`
 
 ### Scripts Disponíveis
 
